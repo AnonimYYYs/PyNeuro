@@ -1,17 +1,5 @@
+import neuro_lib_load
 
-# test.py
-import ctypes
-
-dll_path = "../NeuroLib/out/build/x64-debug/NeuroLib.dll"
-
-# Загружаем DLL
-neuro_lib = ctypes.CDLL(dll_path)
-
-# Объявляем функцию
-neuro_lib.neuro_sum.argtypes = [ctypes.c_int, ctypes.c_int]
-neuro_lib.neuro_sum.restype = ctypes.c_int
-
-
-# Используем функцию
-result = neuro_lib.neuro_sum(9, 3)
-print(result)  # Должно вывести 8
+my_World = neuro_lib_load.World()
+my_World.create_random_world(2, 3, 0.1)
+my_World.print_ions()
