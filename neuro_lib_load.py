@@ -18,7 +18,8 @@ functions = {
     "World_printIons": {"argtypes": [ctypes.c_void_p], "restype": None},
     "World_getSynapsesSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_size_t},
     "World_getSynapsesData": {"argtypes": [ctypes.c_void_p], "restype": ctypes.POINTER(cSynapse)},
-    "World_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int}
+    "World_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int},
+    "World_forwardPass": {"argtypes": [ctypes.c_void_p], "restype": None}
 }
 #int World_getIonsSize(World* world)
 for f_name, f_data in functions.items():
@@ -56,5 +57,7 @@ class World:
         for i in range(size):
             synapse = cSynapse.from_address(ctypes.addressof(synapse_array_ptr.contents) + i * ctypes.sizeof(cSynapse))
             synapses.append(synapse)
-
         return synapses
+
+    def forward_pass(self):
+        neuro_lib.World_forwardPass(self.ptr)

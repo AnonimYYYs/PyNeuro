@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 my_World = neuro_lib_load.World()
 my_World.create_random_world(3, 7, 0.2)
+my_World.forward_pass()
 my_World.print_ions()
 
 synapse_list = my_World.get_synapses()
@@ -36,3 +37,4 @@ nx.draw_networkx_edge_labels(gWorld, pos,  edge_labels=edge_labels)
 nx.draw(gWorld, pos, node_color=color_map, with_labels=True, font_weight='bold')
 nx.draw_networkx_edge_labels(gWorld, pos, edge_labels=edge_labels)
 plt.show()
+
