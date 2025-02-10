@@ -24,6 +24,7 @@ functions = {
     "World_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int},
     "World_checkIfIon": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_bool},
     "World_forwardPass": {"argtypes": [ctypes.c_void_p], "restype": None},
+    "World_createSmallWorld": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p}
 }
 
 for f_name, f_data in functions.items():
