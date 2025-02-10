@@ -17,9 +17,13 @@ functions = {
     "World_createRandomWorld": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p},
     "World_printIons": {"argtypes": [ctypes.c_void_p], "restype": None},
     "World_getSynapsesSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_size_t},
-    "World_getSynapsesData": {"argtypes": [ctypes.c_void_p], "restype": ctypes.POINTER(cSynapse)},
+    "World_getSynapses": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_void_p},
+    "World_getSynapseWeight": {"argtypes": [ctypes.c_void_p, ctypes.c_void_p], "restype": ctypes.c_double},
+    "World_getSynapseConnectedNeuron1": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_int},
+    "World_getSynapseConnectedNeuron2": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_int},
     "World_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int},
-    "World_forwardPass": {"argtypes": [ctypes.c_void_p], "restype": None}
+    "World_checkIfIon": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_bool},
+    "World_forwardPass": {"argtypes": [ctypes.c_void_p], "restype": None},
 }
 
 for f_name, f_data in functions.items():
