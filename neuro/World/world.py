@@ -5,6 +5,26 @@ import networkx as nx
 
 neuro_lib = utils.get_dll()
 
+functions = {
+    "World_new": {"argtypes": [], "restype": ctypes.c_void_p},
+    "World_delete": {"argtypes": [ctypes.c_void_p], "restype": None},
+    "World_createRandomWorld": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p},
+    "World_printIons": {"argtypes": [ctypes.c_void_p], "restype": None},
+    "World_getSynapsesSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_size_t},
+    "World_getSynapses": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_void_p},
+    "World_getSynapseWeight": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_double},
+    "World_getSynapseConnectedNeuron1": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_int},
+    "World_getSynapseConnectedNeuron2": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_int},
+    "World_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int},
+    "World_checkIfIon": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_bool},
+    "World_createSmallWorld": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p}
+}
+
+for f_name, f_data in functions.items():
+    f = getattr(neuro_lib, f_name)
+    f.argtypes = f_data["argtypes"]
+    f.restype = f_data["restype"]
+
 class World:
     def __init__(self):
         self.ptr = None
@@ -56,15 +76,12 @@ class World:
     def check_if_ion(self, index):
         return neuro_lib.World_checkIfIon(self.ptr, index)
 
-    def forward_pass(self):
-        neuro_lib.World_forwardPass(self.ptr)
-
     def create_graph(self):
         print("test")
         edgelist = []
         for i in range(0, self.get_synapses_size()):
-            #edgelist.append((self.get_synapse_neuron1(i), self.get_synapse_neuron2(i), {'weight': "{:.3f}".format(self.get_synapse_weight(i))}))
-            edgelist.append((self.get_synapse_neuron1(i), self.get_synapse_neuron2(i)))
+            edgelist.append((self.get_synapse_neuron1(i), self.get_synapse_neuron2(i), {'weight': "{:.3f}".format(self.get_synapse_weight(i))}))
+            #edgelist.append((self.get_synapse_neuron1(i), self.get_synapse_neuron2(i)))
         print(edgelist)
         self.world_graph = nx.Graph(edgelist)
         return self.world_graph
