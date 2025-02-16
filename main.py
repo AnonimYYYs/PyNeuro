@@ -1,16 +1,16 @@
 from neuro.World import World
-from neuro.World.SimpleForwardNetwork import SimpleForwardNetwork
+# from neuro.World.SimpleForwardNetwork import SimpleForwardNetwork
 import networkx as nx
 import matplotlib.pyplot as plt
 
 my_World = World()
 #my_World.create_random_world(5, 5, 0.2)
 my_World.create_small_world(5,10,3,0.3)
-
-my_Network = SimpleForwardNetwork()
-my_Network.create_new_network(my_World)
-
-my_Network.forward_pass()
+#
+# my_Network = SimpleForwardNetwork()
+# my_Network.create_new_network(my_World)
+#
+# my_Network.forward_pass()
 my_World.print_ions()
 
 graph = my_World.create_graph()
