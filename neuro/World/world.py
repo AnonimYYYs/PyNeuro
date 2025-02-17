@@ -3,8 +3,6 @@ import ctypes
 
 import networkx as nx
 
-neuro_lib = utils.get_dll()
-
 functions = {
     "World_new": {"argtypes": [], "restype": ctypes.c_void_p},
     "World_delete": {"argtypes": [ctypes.c_void_p], "restype": None},
@@ -20,10 +18,11 @@ functions = {
     "World_createSmallWorld": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p}
 }
 
-for f_name, f_data in functions.items():
-    f = getattr(neuro_lib, f_name)
-    f.argtypes = f_data["argtypes"]
-    f.restype = f_data["restype"]
+neuro_lib = utils.get_dll(functions)
+
+
+
+
 
 class World:
     def __init__(self):

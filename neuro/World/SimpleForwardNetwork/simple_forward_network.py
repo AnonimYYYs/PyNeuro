@@ -2,18 +2,14 @@ import utils
 import ctypes
 #from neuro.World import World
 
-neuro_lib = utils.get_dll()
-
 functions = {
     "SimpleForwardNetwork_new": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_void_p},
     "SimpleForwardNetwork_delete": {"argtypes": [ctypes.c_void_p], "restype": None},
     "SimpleForwardNetwork_ForwardPass": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_void_p}
 }
 
-for f_name, f_data in functions.items():
-    f = getattr(neuro_lib, f_name)
-    f.argtypes = f_data["argtypes"]
-    f.restype = f_data["restype"]
+neuro_lib = utils.get_dll(functions)
+
 
 class SimpleForwardNetwork:
     def __init__(self):
