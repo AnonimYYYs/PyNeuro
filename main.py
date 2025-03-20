@@ -5,12 +5,11 @@ import matplotlib.pyplot as plt
 
 my_Network = Network()
 #my_Network.create_random_world(5, 5, 0.2)
-my_Network.create_small_world(5,8,2,0.3)
+my_Network.create_small_world(6,10,1,0.3, 111)
 
 my_ForwardNetwork = SimpleForwardNetwork()
 my_ForwardNetwork.create_new_network(my_Network)
 
-my_ForwardNetwork.forward_pass()
 my_Network.print_ions()
 
 graph = my_Network.create_graph()

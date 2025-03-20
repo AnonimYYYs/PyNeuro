@@ -8,7 +8,7 @@ neuro_lib = utils.get_dll()
 functions = {
     "Network_new": {"argtypes": [], "restype": ctypes.c_void_p},
     "Network_delete": {"argtypes": [ctypes.c_void_p], "restype": None},
-    "Network_createRandomNetwork": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p},
+    "Network_createRandomNetwork": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_float, ctypes.c_int], "restype": ctypes.c_void_p},
     "Network_printIons": {"argtypes": [ctypes.c_void_p], "restype": None},
     "Network_getSynapsesSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_size_t},
     "Network_getSynapses": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_void_p},
@@ -17,7 +17,7 @@ functions = {
     "Network_getSynapseConnectedNeuron2": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_int},
     "Network_getIonsSize": {"argtypes": [ctypes.c_void_p], "restype": ctypes.c_int},
     "Network_checkIfIon": {"argtypes": [ctypes.c_void_p, ctypes.c_int], "restype": ctypes.c_bool},
-    "Network_createSmallWorldNetwork": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_float], "restype": ctypes.c_void_p}
+    "Network_createSmallWorldNetwork": {"argtypes": [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_float, ctypes.c_int], "restype": ctypes.c_void_p}
 }
 
 for f_name, f_data in functions.items():
@@ -42,11 +42,11 @@ class Network:
             neuro_lib.Network_delete(self.ptr)
         self.ptr = neuro_lib.Network_new()
 
-    def create_random_world(self, nIons, nNeurons, connect):
+    def create_random_world(self, nIons, nNeurons, connect, seed = 0):
         if self.ptr:
             neuro_lib.Network_delete(self.ptr)
         connect = ctypes.c_float(connect)
-        self.ptr = neuro_lib.Network_createRandomWorldNetwork(nIons, nNeurons, connect)
+        self.ptr = neuro_lib.Network_createRandomWorldNetwork(nIons, nNeurons, connect, seed)
 
     def print_ions(self):
         neuro_lib.Network_printIons(self.ptr)
@@ -86,8 +86,8 @@ class Network:
         self.world_graph = nx.Graph(edgelist)
         return self.world_graph
 
-    def create_small_world(self, nIons, nNeurons, degree, rewire):
+    def create_small_world(self, nIons, nNeurons, degree, rewire, seed = 0):
         if self.ptr:
             neuro_lib.Network_delete(self.ptr)
         rewire = ctypes.c_float(rewire)
-        self.ptr = neuro_lib.Network_createSmallWorldNetwork(nIons, nNeurons, degree, rewire)
+        self.ptr = neuro_lib.Network_createSmallWorldNetwork(nIons, nNeurons, degree, rewire, seed)
